@@ -1,5 +1,6 @@
 % Simpe game based on projectile motion in 2D
 clear all
+clf
 
 % Initial condition
 v = 10;
@@ -17,6 +18,13 @@ alpha = alpha * pi/180;
 
 vx = v * cos(alpha);
 vy = v * sin(alpha);
+
+target.x = 8;
+target.y = 6;
+target.dx = 0.5;
+target.dy = 0.5;
+target.xcoords = [-1,1,1,-1,-1]*target.dx + target.x;
+target.ycoords = [-1,-1,1,1,-1]*target.dy + target.y;
 
 % Initialize array for stroing velocity and position components
 xt(1) = x;
@@ -36,4 +44,7 @@ for i = 2 : 200
 end
 
 % Visualise projectile trajectory
-plot(xt, yt, '*-b');    
+plot(xt, yt, '*-b');
+hold on
+plot(target.xcoords, target.ycoords, '-r');
+axis equal
