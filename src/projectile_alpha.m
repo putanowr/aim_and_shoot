@@ -39,8 +39,7 @@ plot(target.xcoords, target.ycoords, '-r');
 grid
 axis([-1, 12, -1, 7])
 axis equal
-frame_data(:,:,:,1) = print("-RGBImage", "-dpng", movie_size);
-frame_data(:,:,:,2) = print("-RGBImage", "-dpng", movie_size);
+frame_data = print("-RGBImage", "-dpng", movie_size);
 imwrite(frame_data,movie_file,'gif','writemode','overwrite',...
         'LoopCount',inf,'DelayTime',0);
 hold on
