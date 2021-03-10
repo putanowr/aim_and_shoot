@@ -39,8 +39,9 @@ plot(target.xcoords, target.ycoords, '-r');
 grid
 axis([-1, 12, -1, 7])
 axis equal
-frame_data = print("-RGBImage", "-dpng", movie_size);
-imwrite(frame_data(:,:,1),movie_file,'gif','writemode','overwrite',...
+frame_data(:,:,:,1) = print("-RGBImage", "-dpng", movie_size);
+frame_data(:,:,:,2) = print("-RGBImage", "-dpng", movie_size);
+imwrite(frame_data,movie_file,'gif','writemode','overwrite',...
         'LoopCount',inf,'DelayTime',0);
 hold on
 for i = 2 : 200
@@ -58,8 +59,9 @@ for i = 2 : 200
 end
 
 % Visualise projectile trajectory
+        
 plot(xt, yt, '*b');
-frame_data = print("-RGBImage", "-dpng", movie_size);
-imwrite(frame_data,movie_file,'gif','writemode','append','DelayTime',100)
+last_frame = print("-RGBImage", "-dpng", movie_size);
+imwrite(last_frame,movie_file,'gif','writemode','append','DelayTime',0.5)
 hold on
 
