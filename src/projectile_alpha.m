@@ -1,7 +1,9 @@
 % Simpe game based on projectile motion in 2D
 clear all
 clf
-
+animationDelay = 0.1 % in seconds
+movie_file = 'aim_and_shoot.gif'
+movie_size = '-S400,400'
 % Initial condition
 v = 10;
 alpha = 40;
@@ -33,18 +35,31 @@ vxt(1) = vx;
 vyt(1) = vy;
 
 % Iterate over time steps
+plot(target.xcoords, target.ycoords, '-r');
+grid
+axis([-1, 12, -1, 7])
+axis equal
+frame_data = print("-RGBImage", "-dpng", movie_size);
+imwrite(frame_data(:,:,1),movie_file,'gif','writemode','overwrite',...
+        'LoopCount',inf,'DelayTime',0);
+hold on
 for i = 2 : 200
     vxt(i) = vxt(i-1);
     vyt(i) = vyt(i-1) - g*dt;
     xt(i) = xt(i-1) + vxt(i-1)*dt;
     yt(i) = yt(i-1) + vyt(i-1)*dt; 
+	  line([xt(i-1),xt(i)], [yt(i-1), yt(i)], 'Color', 'green')
+    pause(animationDelay);
+    frame_data = print("-RGBImage", "-dpng", movie_size);
+    imwrite(frame_data,movie_file,'gif','writemode','append','DelayTime',0)
     if (yt(i)< 0)
       break;
     end
 end
 
 % Visualise projectile trajectory
-plot(xt, yt, '*-b');
+plot(xt, yt, '*b');
+frame_data = print("-RGBImage", "-dpng", movie_size);
+imwrite(frame_data,movie_file,'gif','writemode','append','DelayTime',100)
 hold on
-plot(target.xcoords, target.ycoords, '-r');
-axis equal
+
